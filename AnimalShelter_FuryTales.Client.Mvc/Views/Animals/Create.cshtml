@@ -1,0 +1,18 @@
+@model AnimalsCreateViewModel
+<div class="text-danger" asp-validation-summary="ModelOnly"></div>
+<form asp-controller="Animals" asp-action="Create" method="post" enctype="multipart/form-data">
+    <partial name="_AnimalsFormPartial" model="@Model" />
+    <div class="form-group">
+            <label asp-for="Image" class="text-white text-uppercase fw-bold"></label>
+            <input asp-for="Image" class="form-control" placeholder="@Model.Image">
+            <span asp-validation-for="Image" class="text-danger"></span>
+        </div>
+     <div class="form-group">
+            <input type="submit" value="Create" class="btn btn-primary mt-2" />
+        </div>
+</form>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

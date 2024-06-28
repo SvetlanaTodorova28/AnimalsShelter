@@ -1,0 +1,14 @@
+@model BreedsUpdateViewModel
+
+<div class="row">
+    <div class="col col-4 mx-auto border border-2 rounded-2 " style="background-color: lightseagreen;margin-bottom: 90px">
+        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+        <form asp-controller="Breeds" asp-action="Update" method="post" >
+            <partial name="_BreedsFormPartial" model="@Model" />
+            <input asp-for="Id" />
+            <div class="form-group">
+                <input type="submit" value="Update" class="btn btn-primary mb-2 mt-2" />
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,18 @@
+@model AnimalsUpdateViewModel
+<form asp-controller="Animals" asp-action="Update" method="post" enctype="multipart/form-data">
+    <partial name="_AnimalsFormPartial" model="@Model" />
+    <input asp-for="Id" />
+    <div class="form-group">
+        <div class="form-group">
+            <label asp-for="NewImage" class="text-white text-uppercase fw-bold"></label>
+            <input asp-for="NewImage" class="form-control" placeholder="@Model.Image">
+            <span asp-validation-for="NewImage" class="text-danger"></span>
+        </div>
+        <input type="submit" value="Update" class="btn btn-primary m-2"/>
+    </div>
+</form>
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

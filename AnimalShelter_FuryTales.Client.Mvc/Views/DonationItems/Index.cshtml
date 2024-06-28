@@ -1,0 +1,59 @@
+@model DonationItemsIndexViewModel
+
+<div class="row">
+    <div class="col col-lg-4 mx-auto">
+        @if (Model.DonationCartItems.Count == 0)
+        {
+            <div class="alert alert-info">
+                No donations made yet. Start making a difference today!
+                <i class="bi bi-emoji-wink"></i>
+            </div>
+        }
+        else
+        {
+            <h5 class="text-white">Donation Summary</h5>
+            <table class="table table-hover table-responsive">
+                <tr>
+                    <th>Animal Name</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th></th>
+                    <th></th>
+                </tr>
+                @foreach (var item in Model.DonationCartItems)
+                {
+                    <tr>
+                        <td>
+                            @item.AnimalName
+                        </td>
+                        <td>
+                            @item.Quantity
+                            
+                            <td>&euro;@item.Amount.ToString("N2")</td>
+                        </td>
+                        <td>
+                                                                                                       <form asp-controller="DonationItems" asp-action="AddToCart" method="post">
+                                                                                                           <input type="hidden" name="animalId" value="@item.AnimalId" />
+                                                                                                           <button type="submit" class="btn text-white" style="background-color: mediumseagreen">Add</button>
+                                                                                                       </form>
+                                                                                                   </td>
+                        <td>
+                            <form asp-controller="DonationItems" asp-action="RemoveFromCart" method="post">
+                                <input type="hidden" name="animalId" value="@item.AnimalId" />
+                                <button type="submit" class="btn text-white" style="background-color: #dc3545">Remove</button>
+                            </form>
+                        </td>
+                         
+                    </tr>
+                }
+            </table>
+            <div class="alert alert-success">
+                Total Donated: &euro;@Model.TotalPrice.ToString("0.00")
+                 <form asp-controller="DonationItems" asp-action="Checkout" method="post">
+                                               
+                                                <button type="submit" class="btn text-white" style="background-color: #dc3545">Checkout</button>
+                                            </form>
+            </div>
+        }
+    </div>
+</div>

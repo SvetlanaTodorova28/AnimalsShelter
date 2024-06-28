@@ -1,0 +1,30 @@
+@using AnimalShelter_FuryTales.Constants
+@model SpeciesIndexViewModel
+@{
+   ViewData["Title"] = "Breeds";
+}
+
+<div class="text-center">
+   <h1 class="display-4 text-white">Species</h1>
+</div>
+@if(User.Claims.Any(c => c.Value == GlobalConstants.VolunteerRoleName)){
+   <a asp-controller="Species" asp-action="Create"
+      class="btn btn-primary  text-uppercase mb-3">Create New Species</a>
+}
+<div class="row" style="height: 100%">
+   @foreach (var species in Model.Species){
+      <div class="col-md-3">
+         <div class="card" style="margin-bottom: 11px">
+            <div class="card-body">
+               <h5 class="card-title">@species.Name</h5>
+            </div>
+            <div class="card-footer">
+               <div class="btn-group">
+                  <a asp-action="Detail" asp-controller="Species" asp-route-id="@species.Id" class="btn btn-sm text-white" style="background-color:darkorange;margin-right: 3px">Details</a>
+                
+               </div>
+            </div>
+         </div>
+      </div>
+   }
+</div>

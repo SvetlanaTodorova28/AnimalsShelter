@@ -1,0 +1,18 @@
+@model SpeciesUpdateViewModel
+
+<div class="row">
+    <div class="col col-4 mx-auto border border-2 rounded-2 " style="background-color: lightseagreen;margin-bottom: 90px">
+        <div class="text-danger" asp-validation-summary="ModelOnly"></div>
+        <form asp-controller="Species" asp-action="Update" method="post" >
+          <div class="form-group" >
+                                     <label asp-for="Name" class="text-white text-uppercase fw-bold"></label>
+                                     <input asp-for="Name" class="form-control bg-dark-subtle bg-opacity-60" >     
+                                     <span asp-validation-for="Name" class="text-danger"></span>
+                                 </div>
+            <input asp-for="Id" />
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary mt-2 mb-2 text-uppercase rounded-2">Edit</button>
+            </div>
+        </form>
+    </div>
+</div>

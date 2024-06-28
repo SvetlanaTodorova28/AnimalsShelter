@@ -1,0 +1,32 @@
+@using AnimalShelter_FuryTales.Constants
+@using System.Security.Claims
+@model BreedsIndexViewModel
+
+@{
+   ViewData["Title"] = "Breeds";
+}
+
+<div class="text-center">
+   <h1 class="display-4 text-white">Breeds</h1>
+</div>
+@if(User.Claims.Any(c => c.Value == GlobalConstants.VolunteerRoleName)){
+   <a asp-controller="Breeds" asp-action="Create"
+      class="btn btn-primary  text-uppercase mb-3">Create New Breed</a>
+}
+<div class="row" style="height: 100%">
+   @foreach (var breed in Model.Breeds){
+      <div class="col-md-3">
+         <div class="card" style="margin-bottom: 11px">
+            <div class="card-body">
+               <h5 class="card-title">@breed.Name</h5>
+            </div>
+            <div class="card-footer">
+               <div class="btn-group">
+                  <a asp-action="Detail" asp-controller="Breeds" asp-route-id="@breed.Id" class="btn btn-sm text-white" style="background-color: #1c1f23;margin-right: 3px">Details</a>
+                  <a asp-action="AnimalsByBreedId" asp-controller="Breeds" asp-route-id="@breed.Id" class="btn btn-sm text-white" style="background-color: cadetblue">Animals</a>
+               </div>
+            </div>
+         </div>
+      </div>
+   }
+</div>

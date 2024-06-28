@@ -1,0 +1,37 @@
+@using AnimalShelter_FuryTales.Constants
+@model AnimalsIndexViewModel
+<div class="row" style="margin-bottom: 60px">
+    @if (ViewBag.Message == null){
+        foreach (var animal in Model.Animals){
+            <div class="info-card">
+                <img class="item-image" src="@animal.Image" name="">
+
+                <div class="name">
+                    @animal.Name
+                </div>
+
+                <div class="detail">
+                    <a asp-controller="Animals" asp-action="Info" asp-route-id="@animal.Id" class="btn btn-primary ">Details</a>
+                </div>
+
+            </div>
+        }
+        if (User.Claims.Any(c => c.Type == "AnimalCare" && c.Value == GlobalConstants.HealthCareClaimValue)){
+            <div class="col-md-2 d-flex align-items-center justify-content-center">
+                <a asp-controller="Animals" asp-action="Create" type="submit" style="padding-top:180px;padding-left: 60px;padding-bottom: 180px; font-size: xx-large; color: #ece1be">
+                    <i class="bi bi-plus-circle bi-lg d-inline"></i>
+                </a>
+            </div>
+        }
+           
+        
+    }
+    else{
+        <div class="col-md-12">
+            <div class="alert alert-warning" role="alert">
+                @ViewBag.Message
+            </div>
+        </div>
+    }
+     
+</div>

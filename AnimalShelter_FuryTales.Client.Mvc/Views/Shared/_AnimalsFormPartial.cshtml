@@ -1,0 +1,56 @@
+@model AnimalsCreateViewModel
+
+ <div class="form-group" >
+        <label asp-for="Name" class="text-white text-uppercase fw-bold"></label>
+        <input asp-for="Name" class="form-control bg-dark-subtle bg-opacity-60" >     
+        <span asp-validation-for="Name" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="SpeciesId" class="text-white text-uppercase fw-bold"></label>
+        <select asp-for="SpeciesId" asp-items="@Model.Species"class="form-select bg-dark-subtle"></select>   
+    </div>
+    <div class="form-group">
+        <label asp-for="BreedId" class="text-white text-uppercase fw-bold"></label>
+        <select asp-for="BreedId" asp-items="@Model.Breeds"class="form-select bg-dark-subtle"></select>   
+    </div>
+    <div class="form-group" >
+        <label asp-for="UsersIds" class="text-white text-uppercase fw-bold"></label>
+        <select asp-for="UsersIds" asp-items="@Model.Users" class="form-select bg-dark-subtle bg-opacity-60"  size="2"></select>   
+    </div>
+     <div class="form-group" >
+            <label asp-for="Age" class="text-white text-uppercase fw-bold"></label>
+            <input asp-for="Age" class="form-control bg-dark-subtle bg-opacity-60" >     
+            <span asp-validation-for="Age" class="text-danger"></span>
+        </div>
+    <div class="form-group" >
+        <label asp-for="Donation" class="text-white text-uppercase fw-bold"></label>
+        <input asp-for="Donation" class="form-control bg-dark-subtle bg-opacity-60" >     
+        <span asp-validation-for="Donation" class="text-danger"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="@Model.Gender" class="text-white text-uppercase fw-bold"></label>
+    </div>
+    <div class="form-group">
+        @for (int i = 0; i < Model.Gender.Count(); i++){
+            <label asp-for="@Model.Gender[i].Text">
+                @Model.Gender[i].Text
+                <input asp-for="@Model.Gender[i].IsChecked" class="form-check-inline">
+            </label>
+        
+            <input asp-for="@Model.Gender[i].Value" class ="form-control"/>
+            <input asp-for="@Model.Gender[i].Text" class ="form-control"/>
+        }
+    </div>
+    <div class="form-group">
+        <label asp-for="HealthId" class="text-white text-uppercase fw-bold"></label>
+        <select asp-for="HealthId" asp-items="@Model.Health"class="form-select bg-dark-subtle"></select>   
+    </div>
+    
+
+<div class="form-group" >
+    <label asp-for="Description" class="text-white text-uppercase fw-bold">Description</label>
+    <textarea asp-for="Description" class="form-control rounded-3 p-md-1 bg-dark-subtle" rows="6" ></textarea>
+</div>
+
+
+   

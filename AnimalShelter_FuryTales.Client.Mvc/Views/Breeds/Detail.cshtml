@@ -1,0 +1,62 @@
+@using AnimalShelter_FuryTales.Constants
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@using Scala.StockSimulation.Utilities.Authorization.Interfaces
+@inject IAuthorizationServiceDonations AuthorizationServiceDonations
+@model BreedsItemViewModel
+
+<div class="col-md-4">
+    <div class="card">
+        <div class="card-body">
+            <h5 class="card-title">@Model.Name</h5>
+            <h6 class="card-body text-uppercase">Species:@Model.SpeciesName</h6>
+        </div>
+        <div class="card-footer">
+             <div class="card-footer">
+                 <div class="btn-group d-flex">
+                     @if (User.HasClaim(c => c.Value == GlobalConstants.VolunteerRoleName) || AuthorizationServiceDonations.UserMeetsDonationRequirement(User)){
+                         <a asp-controller="Breeds" asp-action="Update" asp-route-id="@Model.Id" class="btn btn-outline-warning me-1 flex-grow-1">Update</a>
+                     }
+                     @if (User.HasClaim(c => c.Value == GlobalConstants.VolunteerRoleName)){
+                         <a class="btn btn-outline-danger me-1 flex-grow-1" onclick="prepareDeleteModal('@Model.Id','@Model.Name')" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</a>
+                     }
+                     <a asp-controller="Breeds" asp-action="Index" class="btn btn-outline-info flex-grow-1">Back</a>
+                 </div>
+                    </div>
+
+        </div>
+    </div>
+   
+</div>
+<!-- Reset Modal -->
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="deleteForm" method="post" asp-controller="Breeds" asp-action="Delete">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Are you sure you want to delete the breed @Model.Name?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+              <div class="modal-body">
+                  <p id="confirmationText"></p>
+                  <input type="hidden" name="id" id="breedIdToDelete" value="" />
+              </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+function prepareDeleteModal(breedId) {
+    document.getElementById("breedIdToDelete").value = breedId;
+
+}
+</script>
+

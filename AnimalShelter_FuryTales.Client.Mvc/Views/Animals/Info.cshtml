@@ -1,0 +1,92 @@
+@using AnimalShelter_FuryTales.Constants
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@model AnimalsItemViewModel
+
+
+<div class="col-lg-6 mx-auto">
+    <div class="card">
+        <!-- Card Image -->
+        <div class="row no-gutters">
+            <div class="col-md-4">
+                <img src="@Model.Image" class="card-img h-100" alt="@Model.Name">
+            </div>
+            <!-- Card Info -->
+            <div class="col-md-8">
+                <div class="card-body h-100" style="background-color:rgba(176, 196, 222, 0.15);
+">
+                    <h5 class="card-title text-center">@Model.Name</h5>
+                                           <h5 class="card-subtitle mb-2"> Breed: @Model.Breed.Name</h5>
+                                           <h5 class="card-subtitle mb-2"> Species: @Model.Species.Name</h5>
+                                           <h5 class="card-subtitle mb-2">Health : @Model.Health</h5>
+                                           <h5 class="card-subtitle mb-2">Age : @Model.Age</h5>
+                                           <h5 class="card-subtitle mb-2">Gender : @Model.Gender</h5>
+                                           <h5 class="card-subtitle mb-2">Description : @Model.Description</h5>
+                                           <h5 class="card-subtitle mb-2">Monthly food expense : &euro;@Model.Donation.ToString()</h5>
+                    
+                    @if (Model.Users.Any()){
+                        <h5 class="card-subtitle mb-2">Care takers : </h5>
+                        @foreach (var user in Model.Users){
+                            <p class="d-inline">@user.Name <i class="bi bi-capsule"></i></p>
+                        }
+                    }
+                    @if (User.HasClaim(c => c.Value == GlobalConstants.AdopterRoleName)){
+                        <form asp-controller="DonationItems" asp-action="AddToCart" asp-route-animalId="@Model.Id" method="post">
+                            <input type="hidden" name="animalId" value="@Model.Id"/>
+                            <button type="submit" class="btn btn-primary bg-gradient mb-5 mt-3 fw-bold btn-lg text-uppercase p-3 d-block shadow-lg" style="background-color: lightgrey; border-radius: 10px; border: none; width: 80%; font-size: 1.0rem;">
+                                Donate
+                            </button>
+                        </form>
+                    }
+                </div>
+            </div>
+            <div class="card-footer">
+                <div class="card-footer">
+                    <div class="btn-group d-flex">
+                        @if (User.Claims.Any(c => c.Type == "AnimalCare" && c.Value == GlobalConstants.HealthCareClaimValue)){
+                            <a asp-controller="Animals" asp-action="Update" asp-route-id="@Model.Id" class="btn btn-outline-warning me-1 flex-grow-1">Update</a>
+                            <a class="btn btn-outline-danger me-1 flex-grow-1" onclick="prepareDeleteModal('@Model.Id','@Model.Name')" data-bs-toggle="modal" data-bs-target="#deleteModal">Delete</a>
+                        }
+                        <a asp-controller="Animals" asp-action="Index" class="btn btn-outline-info flex-grow-1">Back</a>
+                    </div>
+                </div>
+            
+            </div>
+        </div>
+    </div>
+    
+</div>
+<!-- Reset Modal -->
+<!-- Delete Confirmation Modal -->
+<!-- Delete Confirmation Modal -->
+<div class="modal fade" id="deleteModal" tabindex="-1" aria-labelledby="deleteModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="deleteForm" method="post" asp-controller="Animals" asp-action="Delete">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="deleteModalLabel">Are you sure you want to delete the animal @Model.Name?</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="confirmationText"></p>
+                    <input type="hidden" name="id" id="animalIdToDelete" value="" />
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-danger">Delete</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    function prepareDeleteModal(animalId) {
+        document.getElementById("animalIdToDelete").value = animalId;
+
+    }
+</script>
+
+
